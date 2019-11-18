@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -16,13 +17,16 @@ import java.io.IOException;
 public class MainStageInitializer implements ApplicationListener<StageReadyEvent> {
     @Value("main-game.fxml")
     private ClassPathResource gameResource;
+    private ApplicationContext context;
     private String mainWindowTitle;
     private double windowHeight;
     private double windowWidth;
 
-    public MainStageInitializer(@Value("${game.title}") String mainWindowTitle,
+    public MainStageInitializer(ApplicationContext context,
+                                @Value("${game.title}") String mainWindowTitle,
                                 @Value("${game.height}") double windowHeight,
                                 @Value("${game.width}") double windowWidth) {
+        this.context = context;
         this.mainWindowTitle = mainWindowTitle;
         this.windowHeight = windowHeight;
         this.windowWidth = windowWidth;
@@ -42,17 +46,11 @@ public class MainStageInitializer implements ApplicationListener<StageReadyEvent
 
     private void setupMainGameWindow(Stage gameStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(gameResource.getURL());
+        //needed for applicationContext beans usage in javaFX wiring - take bean of aClassType from spring context
+        fxmlLoader.setControllerFactory(aClassType -> context.getBean(aClassType));
         Parent parent = fxmlLoader.load();
 
         gameStage.setScene(new Scene(parent, windowWidth, windowHeight));
         gameStage.setTitle(mainWindowTitle);
-
-        printProperties();
-    }
-
-    private void printProperties() {
-        System.out.println("title: " + mainWindowTitle);
-        System.out.println("wid: " + windowWidth);
-        System.out.println("hei: " + windowHeight);
     }
 }
