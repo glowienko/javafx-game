@@ -1,6 +1,6 @@
 package com.game.space.invaders;
 
-import com.game.space.invaders.MainGameApplication.StageReadyEvent;
+import com.game.space.invaders.GameApplication.StageReadyEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

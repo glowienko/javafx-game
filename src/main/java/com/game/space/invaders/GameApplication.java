@@ -7,12 +7,12 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
-public class MainGameApplication extends Application {
+public class GameApplication extends Application {
     private ConfigurableApplicationContext context;
 
     @Override
     public void init() {
-        context = new SpringApplicationBuilder(MainSpringApplication.class).run();
+        context = new SpringApplicationBuilder(SpringApplication.class).run();
     }
 
     @Override

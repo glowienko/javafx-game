@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class MainSpringApplication {
+public class SpringApplication {
 
     public static void main(String[] args) {
-        Application.launch(MainGameApplication.class, args);
+        Application.launch(GameApplication.class, args);
     }
 }
